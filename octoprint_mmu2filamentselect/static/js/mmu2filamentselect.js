@@ -38,7 +38,8 @@ $(function() {
                     1:"Filament 2: "+self.settings.settings.plugins.mmu2filamentselect.filament2(),
                     2:"Filament 3: "+self.settings.settings.plugins.mmu2filamentselect.filament3(),
                     3:"Filament 4: "+self.settings.settings.plugins.mmu2filamentselect.filament4(),
-                    4:"Filament 5: "+self.settings.settings.plugins.mmu2filamentselect.filament5()
+                    4:"Filament 5: "+self.settings.settings.plugins.mmu2filamentselect.filament5(),
+                    5:"Cancel print"
                 },
                 onselect: function(index) {
                     if (index > -1) {

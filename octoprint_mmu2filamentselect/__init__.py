@@ -97,6 +97,12 @@ class MMU2SelectPlugin(octoprint.plugin.TemplatePlugin, octoprint.plugin.Setting
 		self._printer.commands("Tx", tags={"mmu2Plugin:choose_filament_resend"})
 		self._clean_up_prompt()
 
+	def _cancel_prompt(self, tags=set()):
+		self._printer.cancel_print()
+		self._selectedTool = None
+		self._txTriggered = False
+		self._clean_up_prompt()
+
 	def _done_prompt(self, command, tags=set()):
 		self._selectedTool = command
 		self._txTriggered = True
@@ -122,10 +128,12 @@ class MMU2SelectPlugin(octoprint.plugin.TemplatePlugin, octoprint.plugin.Setting
 				return flask.abort(409, "No active prompt")
 
 			choice = data["choice"]
-			if not isinstance(choice, int) or not choice < 5 or not choice >= 0:
+			if not isinstance(choice, int) or not choice < 6 or not choice >= 0:
 				return flask.abort(400, "{!r} is not a valid value for filament choice".format(choice+1))
-
-			self._done_prompt("T" + str(choice))
+			if (choice == 5):
+				self._cancel_prompt()
+			else:
+				self._done_prompt("T" + str(choice))
 
 	#~ Update
 
