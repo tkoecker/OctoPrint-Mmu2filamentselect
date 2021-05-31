@@ -52,6 +52,7 @@ class MMU2SelectPlugin(octoprint.plugin.TemplatePlugin, octoprint.plugin.Setting
 	def get_settings_defaults(self):
 		return dict(
 			timeout=30,
+			labelSource="manual",
 			filament1="",
 			filament2="",
 			filament3="",

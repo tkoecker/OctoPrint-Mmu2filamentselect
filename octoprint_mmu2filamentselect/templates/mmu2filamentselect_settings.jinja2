@@ -9,8 +9,35 @@
             <span class="help-block"><small>{{ _('After this given time, the dialog closes and the print will go on as usual. This means you have to select the filament at your printer.') }}</small></span>
         </div>
     </div>
+    <div class="control-group">
+        <label class="control-label">{{ _('Filament label source') }}</label>
+        <div class="controls">
+            <label class="radio">
+            <input type="radio" name="pluginMMU2FilamentSelectLabelSource" data-bind="checked: settings.plugins.mmu2filamentselect.labelSource" value="filamentManager">{{ _('Query from <a target="_blank" href="https://github.com/OllisGit/OctoPrint-FilamentManager">Filament Manager Plugin</a>') }}
+            <!-- ko if: $root.filamentManager !== null -->
+            <span class="text-success">{{ _("(installed)") }}</span>
+            <!-- /ko -->
+            <!-- ko if: $root.filamentManager === null -->
+            <span class="text-error">{{ _("(not installed)") }}</span>
+            <!-- /ko -->
+            </label>
+            <label class="radio">
+            <input type="radio" name="pluginMMU2FilamentSelectLabelSource" data-bind="checked: settings.plugins.mmu2filamentselect.labelSource" value="spoolManager">{{ _('Query from <a target="_blank" href="https://github.com/OllisGit/OctoPrint-SpoolManager">Spool Manager Plugin</a>') }}
+            <!-- ko if: $root.spoolManager !== null -->
+            <span class="text-success">{{ _("(installed)") }}</span>
+            <!-- /ko -->
+            <!-- ko if: $root.spoolManager === null -->
+            <span class="text-error">{{ _("(not installed)") }}</span>
+            <!-- /ko -->
+            </label>
+            <label class="radio">
+            <input type="radio" name="pluginMMU2FilamentSelectLabelSource" data-bind="checked: settings.plugins.mmu2filamentselect.labelSource" value="manual">{{ _('Use manually specified names below') }}
+            </label>
+        </div>
+    </div>
 
     <h4>{{ _('Filament labels') }}</h4>
+    <span class="help-block"><small>{{ _('If the names are not queried from the another plugin the names listed below will be used.') }}</small></span>
     <div class="control-group">
         <label class="control-label">{{ _('Filament 1') }}</label>
         <div class="controls">
