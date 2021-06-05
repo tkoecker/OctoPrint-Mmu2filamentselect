@@ -61,22 +61,23 @@ class MMU2SelectPlugin(octoprint.plugin.TemplatePlugin, octoprint.plugin.Setting
 		)
 
 	def on_settings_save(self, data):
-		try:
-			data["timeout"]=int(data["timeout"])
-		except:
-			data["timeout"]=30
+		if "timeout" in data:
+			try:
+				data["timeout"]=int(data["timeout"])
+			except:
+				data["timeout"]=30
 
-		if data["timeout"] < 0:
-			data["timeout"]=30
+			if data["timeout"] < 0:
+				data["timeout"]=30
+			self._timeout = self._settings.get(["timeout"])
 
 		octoprint.plugin.SettingsPlugin.on_settings_save(self, data)
-		self._timeout = self._settings.get(["timeout"])
 
 	#~ TemplatePlugin
 
 	def get_template_configs(self):
 		return [
-			dict(type="settings", name=gettext("MMU2 Select Filament"), custom_bindings=False)
+			dict(type="settings", name=gettext("MMU2 Select Filament"))
 		]
 
 	#~ AssetPlugin

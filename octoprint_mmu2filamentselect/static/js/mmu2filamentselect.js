@@ -93,6 +93,15 @@ $(function() {
             }
         };
 
+        self.onAfterBinding = function(){
+            if (self.filamentManager === null && self.settings.settings.plugins.mmu2filamentselect.labelSource() === "filamentManager") {
+                self.settings.settings.plugins.mmu2filamentselect.labelSource("manual");
+            }
+            if (self.spoolManager === null && self.settings.settings.plugins.mmu2filamentselect.labelSource() === "spoolManager") {
+                self.settings.settings.plugins.mmu2filamentselect.labelSource("manual");
+            }
+        }
+
         self.onDataUpdaterPluginMessage = function(plugin, data) {
             if (!self.loginState.isUser()) return;
             if (plugin !== "mmu2filamentselect") {
@@ -116,6 +125,7 @@ $(function() {
     OCTOPRINT_VIEWMODELS.push({
         construct: MMU2SelectViewModel,
         dependencies: ["settingsViewModel","loginStateViewModel","filamentManagerViewModel","spoolManagerViewModel"],
-        optional: ["filamentManagerViewModel","spoolManagerViewModel"]
+        optional: ["filamentManagerViewModel","spoolManagerViewModel"],
+        elements: ["#settings_plugin_mmu2filamentselect"]
     });
 });

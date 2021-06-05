@@ -3,7 +3,7 @@
         <label class="control-label">{{ _('Timeout') }}</label>
         <div class="controls">
         <div class="input-append">
-            <input type="number" class="input-mini text-right" class="input-block-level" data-bind="value: settings.plugins.mmu2filamentselect.timeout">
+            <input type="number" class="input-mini text-right" class="input-block-level" data-bind="value: $root.settings.settings.plugins.mmu2filamentselect.timeout">
             <span class="add-on">{{ _('seconds') }}</span>
 			</div>
             <span class="help-block"><small>{{ _('After this given time, the dialog closes and the print will go on as usual. This means you have to select the filament at your printer.') }}</small></span>
@@ -13,7 +13,7 @@
         <label class="control-label">{{ _('Filament label source') }}</label>
         <div class="controls">
             <label class="radio">
-            <input type="radio" name="pluginMMU2FilamentSelectLabelSource" data-bind="checked: settings.plugins.mmu2filamentselect.labelSource" value="filamentManager">{{ _('Query from <a target="_blank" href="https://github.com/OllisGit/OctoPrint-FilamentManager">Filament Manager Plugin</a>') }}
+            <input type="radio" name="pluginMMU2FilamentSelectLabelSource" data-bind="checked: $root.settings.settings.plugins.mmu2filamentselect.labelSource, enable: $root.filamentManager !== null" value="filamentManager">{{ _('Query from <a target="_blank" href="https://github.com/OllisGit/OctoPrint-FilamentManager">Filament Manager Plugin</a>') }}
             <!-- ko if: $root.filamentManager !== null -->
             <span class="text-success">{{ _("(installed)") }}</span>
             <!-- /ko -->
@@ -22,7 +22,7 @@
             <!-- /ko -->
             </label>
             <label class="radio">
-            <input type="radio" name="pluginMMU2FilamentSelectLabelSource" data-bind="checked: settings.plugins.mmu2filamentselect.labelSource" value="spoolManager">{{ _('Query from <a target="_blank" href="https://github.com/OllisGit/OctoPrint-SpoolManager">Spool Manager Plugin</a>') }}
+            <input type="radio" name="pluginMMU2FilamentSelectLabelSource" data-bind="checked: $root.settings.settings.plugins.mmu2filamentselect.labelSource, enable: $root.spoolManager !== null" value="spoolManager">{{ _('Query from <a target="_blank" href="https://github.com/OllisGit/OctoPrint-SpoolManager">Spool Manager Plugin</a>') }}
             <!-- ko if: $root.spoolManager !== null -->
             <span class="text-success">{{ _("(installed)") }}</span>
             <!-- /ko -->
@@ -31,7 +31,7 @@
             <!-- /ko -->
             </label>
             <label class="radio">
-            <input type="radio" name="pluginMMU2FilamentSelectLabelSource" data-bind="checked: settings.plugins.mmu2filamentselect.labelSource" value="manual">{{ _('Use manually specified names below') }}
+            <input type="radio" name="pluginMMU2FilamentSelectLabelSource" data-bind="checked: $root.settings.settings.plugins.mmu2filamentselect.labelSource" value="manual">{{ _('Use manually specified names below') }}
             </label>
         </div>
     </div>
@@ -41,31 +41,31 @@
     <div class="control-group">
         <label class="control-label">{{ _('Filament 1') }}</label>
         <div class="controls">
-            <input type="text" class="input-block-level" data-bind="value: settings.plugins.mmu2filamentselect.filament1">
+            <input type="text" class="input-block-level" data-bind="value: $root.settings.settings.plugins.mmu2filamentselect.filament1">
         </div>
     </div>
     <div class="control-group">
         <label class="control-label">{{ _('Filament 2') }}</label>
         <div class="controls">
-            <input type="text" class="input-block-level" data-bind="value: settings.plugins.mmu2filamentselect.filament2">
+            <input type="text" class="input-block-level" data-bind="value: $root.settings.settings.plugins.mmu2filamentselect.filament2">
         </div>
     </div>
     <div class="control-group">
         <label class="control-label">{{ _('Filament 3') }}</label>
         <div class="controls">
-            <input type="text" class="input-block-level" data-bind="value: settings.plugins.mmu2filamentselect.filament3">
+            <input type="text" class="input-block-level" data-bind="value: $root.settings.settings.plugins.mmu2filamentselect.filament3">
         </div>
     </div>
     <div class="control-group">
         <label class="control-label">{{ _('Filament 4') }}</label>
         <div class="controls">
-            <input type="text" class="input-block-level" data-bind="value: settings.plugins.mmu2filamentselect.filament4">
+            <input type="text" class="input-block-level" data-bind="value: $root.settings.settings.plugins.mmu2filamentselect.filament4">
         </div>
     </div>
     <div class="control-group">
         <label class="control-label">{{ _('Filament 5') }}</label>
         <div class="controls">
-            <input type="text" class="input-block-level" data-bind="value: settings.plugins.mmu2filamentselect.filament5">
+            <input type="text" class="input-block-level" data-bind="value: $root.settings.settings.plugins.mmu2filamentselect.filament5">
         </div>
     </div>
 
