@@ -6,7 +6,21 @@
             <input type="number" class="input-mini text-right" class="input-block-level" data-bind="value: $root.settings.settings.plugins.mmu2filamentselect.timeout">
             <span class="add-on">{{ _('seconds') }}</span>
 			</div>
-            <span class="help-block"><small>{{ _('After this given time, the dialog closes and the print will go on as usual. This means you have to select the filament at your printer.') }}</small></span>
+            <span class="help-block"><small>{{ _('After this given time, the dialog closes and the action selected below will be performed.') }}</small></span>
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label">{{ _('Timeout action') }}</label>
+        <div class="controls">
+            <select name="pluginMMU2FilamentSelectDefaultAction" data-bind="value: $root.settings.settings.plugins.mmu2filamentselect.timeoutAction">
+                <option value="printerDialog">{{ _('ask on printer') }}</option>
+                <option value="cancelPrint">{{ _('cancel print') }}</option>
+                <option value="0">{{ _('use filament 1') }}</option>
+                <option value="1">{{ _('use filament 2') }}</option>
+                <option value="2">{{ _('use filament 3') }}</option>
+                <option value="3">{{ _('use filament 4') }}</option>
+                <option value="4">{{ _('use filament 5') }}</option>
+            </select>
         </div>
     </div>
     <div class="control-group">

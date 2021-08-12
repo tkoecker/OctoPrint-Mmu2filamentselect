@@ -52,6 +52,7 @@ class MMU2SelectPlugin(octoprint.plugin.TemplatePlugin, octoprint.plugin.Setting
 	def get_settings_defaults(self):
 		return dict(
 			timeout=30,
+			timeoutAction="printerDialog",
 			labelSource="manual",
 			filament1="",
 			filament2="",
@@ -96,8 +97,14 @@ class MMU2SelectPlugin(octoprint.plugin.TemplatePlugin, octoprint.plugin.Setting
 		self._plugin_manager.send_plugin_message(self._identifier, dict(action="show"))
 
 	def _timeout_prompt(self):
-		self._printer.commands("Tx", tags={"mmu2Plugin:choose_filament_resend"})
-		self._clean_up_prompt()
+		timeoutAction = self._settings.get(["timeoutAction"])
+		if timeoutAction == "printerDialog":
+			self._printer.commands("Tx", tags={"mmu2Plugin:choose_filament_resend"})
+			self._clean_up_prompt()
+		elif timeoutAction == "cancelPrint":
+			self._cancel_prompt()
+		else:
+			self._done_prompt("T"+timeoutAction)
 
 	def _cancel_prompt(self, tags=set()):
 		self._printer.cancel_print()
