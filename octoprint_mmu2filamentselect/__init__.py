@@ -4,13 +4,11 @@ from __future__ import unicode_literals
 import octoprint.plugin
 from threading import Timer
 
-from octoprint.server import user_permission
-
 import flask
 from flask_babel import gettext
 
 
-class MMU2SelectPlugin(octoprint.plugin.TemplatePlugin, octoprint.plugin.SettingsPlugin, octoprint.plugin.SimpleApiPlugin, octoprint.plugin.AssetPlugin):
+class MMU2SelectPluginOctoDash(octoprint.plugin.TemplatePlugin, octoprint.plugin.SettingsPlugin, octoprint.plugin.SimpleApiPlugin, octoprint.plugin.AssetPlugin):
 
 	def __init__(self):
 		self._active = False
@@ -22,7 +20,7 @@ class MMU2SelectPlugin(octoprint.plugin.TemplatePlugin, octoprint.plugin.Setting
 	def initialize(self):
 		self._timeout = self._settings.get(["timeout"])
 
-	#~ queuing handling
+	# ~ queuing handling
 
 	def gcode_queuing_handler(self, comm_instance, phase, cmd, cmd_type, gcode, subcode=None, tags=None, *args, **kwargs):
 		if not cmd.startswith("Tx") and not cmd.startswith("M109"):
@@ -36,8 +34,7 @@ class MMU2SelectPlugin(octoprint.plugin.TemplatePlugin, octoprint.plugin.Setting
 				tool_cmd = self._selectedTool
 				self._selectedTool = None
 				self._txTriggered = False
-				return[(cmd,),
-					(tool_cmd,)]
+				return [(cmd,), (tool_cmd,)]
 			else:
 				return
 
@@ -45,13 +42,13 @@ class MMU2SelectPlugin(octoprint.plugin.TemplatePlugin, octoprint.plugin.Setting
 			if self._printer.set_job_on_hold(True):
 				self._show_prompt()
 
-		return None,
+		return None
 
-	#~ SettingsPlugin
+	# ~ SettingsPlugin
 
 	def get_settings_defaults(self):
 		return dict(
-			timeout=30,
+			timeout=300,
 			timeoutAction="printerDialog",
 			labelSource="manual",
 			filament1="",
@@ -64,31 +61,31 @@ class MMU2SelectPlugin(octoprint.plugin.TemplatePlugin, octoprint.plugin.Setting
 	def on_settings_save(self, data):
 		if "timeout" in data:
 			try:
-				data["timeout"]=int(data["timeout"])
+				data["timeout"] = int(data["timeout"])
 			except:
-				data["timeout"]=30
+				data["timeout"] = 300
 
 			if data["timeout"] < 0:
-				data["timeout"]=30
+				data["timeout"] = 300
 			self._timeout = self._settings.get(["timeout"])
 
 		octoprint.plugin.SettingsPlugin.on_settings_save(self, data)
 
-	#~ TemplatePlugin
+	# ~ TemplatePlugin
 
 	def get_template_configs(self):
 		return [
 			dict(type="settings", name=gettext("MMU2 Select Filament"))
 		]
 
-	#~ AssetPlugin
+	# ~ AssetPlugin
 
 	def get_assets(self):
 		return dict(
 			js=["js/mmu2filamentselect.js"]
 		)
 
-	#~ prompt handling
+	# ~ prompt handling
 
 	def _show_prompt(self):
 		self._active = True
@@ -104,7 +101,7 @@ class MMU2SelectPlugin(octoprint.plugin.TemplatePlugin, octoprint.plugin.Setting
 		elif timeoutAction == "cancelPrint":
 			self._cancel_prompt()
 		else:
-			self._done_prompt("T"+timeoutAction)
+			self._done_prompt("T" + timeoutAction)
 
 	def _cancel_prompt(self, tags=set()):
 		self._printer.cancel_print()
@@ -123,48 +120,48 @@ class MMU2SelectPlugin(octoprint.plugin.TemplatePlugin, octoprint.plugin.Setting
 		self._plugin_manager.send_plugin_message(self._identifier, dict(action="close"))
 		self._printer.set_job_on_hold(False)
 
-	#~ SimpleApiPlugin
+	# ~ SimpleApiPlugin
 
 	def get_api_commands(self):
-		return dict(select=["choice"])
+		return dict(select=["choice"], check=[])
 
 	def on_api_command(self, command, data):
+		if command == "check":
+			if self._active and not self._txTriggered:
+				return flask.jsonify(result='show')
+			else:
+				return flask.jsonify(result='none')
 		if command == "select":
-			if not user_permission.can():
-				return flask.abort(403, "Insufficient permissions")
-
 			if self._active is False:
 				return flask.abort(409, "No active prompt")
 
 			choice = data["choice"]
 			if not isinstance(choice, int) or not choice < 6 or not choice >= 0:
-				return flask.abort(400, "{!r} is not a valid value for filament choice".format(choice+1))
+				return flask.abort(400, "{!r} is not a valid value for filament choice".format(choice + 1))
 			if (choice == 5):
 				self._cancel_prompt()
 			else:
 				self._done_prompt("T" + str(choice))
 
-	#~ Update
+	# ~ Update
 
 	def get_update_information(self, *args, **kwargs):
 		return dict(
 			mmu2filamentselect=dict(
 				displayName=self._plugin_name,
 				displayVersion=self._plugin_version,
-
 				type="github_release",
 				current=self._plugin_version,
-				user="tkoecker",
+				user="rubegartor",
 				repo="OctoPrint-Mmu2filamentselect",
-
-				pip="https://github.com/tkoecker/OctoPrint-Mmu2filamentselect/archive/{target_version}.zip"
+				pip="https://github.com/rubegartor/OctoPrint-Mmu2filamentselect/archive/{target_version}.zip"
 			)
 		)
 
 
-__plugin_name__ = "Prusa MMU2 Select Filament"
+__plugin_name__ = "Prusa MMU2 Select Filament (OctoDash)"
 __plugin_pythoncompat__ = ">=2.7,<4"
-__plugin_implementation__ = MMU2SelectPlugin()
+__plugin_implementation__ = MMU2SelectPluginOctoDash()
 __plugin_hooks__ = {
 	"octoprint.comm.protocol.gcode.queuing": __plugin_implementation__.gcode_queuing_handler,
 	"octoprint.plugin.softwareupdate.check_config": __plugin_implementation__.get_update_information

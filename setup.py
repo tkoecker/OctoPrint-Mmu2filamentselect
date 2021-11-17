@@ -4,30 +4,30 @@
 ### Do not forget to adjust the following variables to your own plugin.
 
 # The plugin's identifier, has to be unique
-plugin_identifier = "mmu2filamentselect"
+plugin_identifier = "mmu2filamentselectoctodash"
 
 # The plugin's python package, should be "octoprint_<plugin identifier>", has to be unique
 plugin_package = "octoprint_mmu2filamentselect"
 
 # The plugin's human readable name. Can be overwritten within OctoPrint's internal data via __plugin_name__ in the
 # plugin module
-plugin_name = "OctoPrint-Mmu2filamentselect"
+plugin_name = "OctoPrint-Mmu2filamentselect-OctoDash"
 
 # The plugin's version. Can be overwritten within OctoPrint's internal data via __plugin_version__ in the plugin module
-plugin_version = "1.0.7"
+plugin_version = "1.0.0"
 
 # The plugin's description. Can be overwritten within OctoPrint's internal data via __plugin_description__ in the plugin
 # module
-plugin_description = """This plugin shows a dialog to select the filament when a print on a Prusa printer with MMU2 is started in single mode."""
+plugin_description = """This plugin shows a dialog to select the filament when a print on a Prusa printer with MMU2 is started in single mode with OctoDash integration"""
 
 # The plugin's author. Can be overwritten within OctoPrint's internal data via __plugin_author__ in the plugin module
-plugin_author = "Thomas Köckerbauer, previously Florian Schütte"
+plugin_author = "rubegartor"
 
 # The plugin's author's mail address.
-plugin_author_email = "tkoecker@gmx.net"
+plugin_author_email = "rubegartor@protonmail.com"
 
 # The plugin's homepage URL. Can be overwritten within OctoPrint's internal data via __plugin_url__ in the plugin module
-plugin_url = "https://github.com/tkoecker/OctoPrint-Mmu2filamentselect"
+plugin_url = "https://github.com/rubegartor/OctoPrint-Mmu2filamentselect"
 
 # The plugin's license. Can be overwritten within OctoPrint's internal data via __plugin_license__ in the plugin module
 plugin_license = "AGPLv3"
