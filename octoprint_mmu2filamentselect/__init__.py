@@ -3,7 +3,7 @@ from threading import Timer
 import flask
 import octoprint.plugin
 from flask_babel import gettext
-from octoprint.server import user_permission
+from octoprint.access.permissions import ADMIN_GROUP, USER_GROUP, Permissions
 
 
 class MMU2SelectPlugin(
@@ -133,7 +133,7 @@ class MMU2SelectPlugin(
         self._printer.set_job_on_hold(False)
 
     # ~ SimpleApiPlugin
-    
+
     def is_api_protected(self):
         return True
 
@@ -141,10 +141,10 @@ class MMU2SelectPlugin(
         return dict(select=["choice"])
 
     def on_api_command(self, command, data):
-        if command == "select":
-            if not user_permission.can():
-                return flask.abort(403, "Insufficient permissions")
+        if not Permissions.PLUGIN_MMU2FILAMENTSELECT_SELECT.can():
+            return flask.abort(403, "Insufficient permissions")
 
+        if command == "select":
             if self._active is False:
                 return flask.abort(409, "No active prompt")
 
@@ -158,6 +158,20 @@ class MMU2SelectPlugin(
                 self._cancel_prompt()
             else:
                 self._done_prompt("T" + str(choice))
+
+    # ~ Permissions
+
+    def get_additional_permissions(self, *args, **kwargs):
+        return [
+            dict(
+                key="SELECT",
+                name="Select filament",
+                description=gettext("Allows to select the filament"),
+                roles=["user"],
+                dangerous=False,
+                default_groups=[ADMIN_GROUP, USER_GROUP],
+            )
+        ]
 
     # ~ Update
 
@@ -179,6 +193,7 @@ __plugin_name__ = "Prusa MMU2 Select Filament"
 __plugin_pythoncompat__ = ">=3.7,<4"
 __plugin_implementation__ = MMU2SelectPlugin()
 __plugin_hooks__ = {
+    "octoprint.access.permissions": __plugin_implementation__.get_additional_permissions,
     "octoprint.comm.protocol.gcode.queuing": __plugin_implementation__.gcode_queuing_handler,
     "octoprint.plugin.softwareupdate.check_config": __plugin_implementation__.get_update_information,
 }
