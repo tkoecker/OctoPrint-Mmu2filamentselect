@@ -136,6 +136,9 @@ class MMU2SelectPlugin(
         self._printer.set_job_on_hold(False)
 
     # ~ SimpleApiPlugin
+    
+    def is_api_protected(self):
+        return True
 
     def get_api_commands(self):
         return dict(select=["choice"])
