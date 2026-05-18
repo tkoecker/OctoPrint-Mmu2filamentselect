@@ -92,6 +92,9 @@ class MMU2SelectPlugin(
     def get_template_configs(self):
         return [dict(type="settings", name=gettext("MMU2 Select Filament"))]
 
+    def is_template_autoescaped(self):
+        return True
+
     # ~ AssetPlugin
 
     def get_assets(self):

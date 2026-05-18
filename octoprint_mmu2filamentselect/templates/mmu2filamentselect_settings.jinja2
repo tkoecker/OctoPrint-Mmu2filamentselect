@@ -27,7 +27,7 @@
         <label class="control-label">{{ _('Filament label source') }}</label>
         <div class="controls">
             <label class="radio">
-            <input type="radio" name="pluginMMU2FilamentSelectLabelSource" data-bind="checked: $root.settings.settings.plugins.mmu2filamentselect.labelSource, enable: $root.filamentManager !== null" value="filamentManager">{{ _('Query from <a target="_blank" href="https://github.com/OllisGit/OctoPrint-FilamentManager">Filament Manager Plugin</a>') }}
+            <input type="radio" name="pluginMMU2FilamentSelectLabelSource" data-bind="checked: $root.settings.settings.plugins.mmu2filamentselect.labelSource, enable: $root.filamentManager !== null" value="filamentManager">{{ _('Query from <a target="_blank" href="https://github.com/OllisGit/OctoPrint-FilamentManager">Filament Manager Plugin</a>')|safe }}
             <!-- ko if: $root.filamentManager !== null -->
             <span class="text-success">{{ _("(installed)") }}</span>
             <!-- /ko -->
@@ -36,7 +36,7 @@
             <!-- /ko -->
             </label>
             <label class="radio">
-            <input type="radio" name="pluginMMU2FilamentSelectLabelSource" data-bind="checked: $root.settings.settings.plugins.mmu2filamentselect.labelSource, enable: $root.spoolManager !== null" value="spoolManager">{{ _('Query from <a target="_blank" href="https://github.com/OllisGit/OctoPrint-SpoolManager">Spool Manager Plugin</a>') }}
+            <input type="radio" name="pluginMMU2FilamentSelectLabelSource" data-bind="checked: $root.settings.settings.plugins.mmu2filamentselect.labelSource, enable: $root.spoolManager !== null" value="spoolManager">{{ _('Query from <a target="_blank" href="https://github.com/OllisGit/OctoPrint-SpoolManager">Spool Manager Plugin</a>')|safe }}
             <!-- ko if: $root.spoolManager !== null -->
             <span class="text-success">{{ _("(installed)") }}</span>
             <!-- /ko -->
