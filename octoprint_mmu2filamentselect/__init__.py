@@ -1,6 +1,3 @@
-# coding=utf-8
-from __future__ import absolute_import, unicode_literals
-
 from threading import Timer
 
 import flask
@@ -155,7 +152,7 @@ class MMU2SelectPlugin(
             if not isinstance(choice, int) or not choice < 6 or not choice >= 0:
                 return flask.abort(
                     400,
-                    "{!r} is not a valid value for filament choice".format(choice + 1),
+                    f"{choice + 1!r} is not a valid value for filament choice",
                 )
             if choice == 5:
                 self._cancel_prompt()
@@ -179,7 +176,7 @@ class MMU2SelectPlugin(
 
 
 __plugin_name__ = "Prusa MMU2 Select Filament"
-__plugin_pythoncompat__ = ">=2.7,<4"
+__plugin_pythoncompat__ = ">=3.7,<4"
 __plugin_implementation__ = MMU2SelectPlugin()
 __plugin_hooks__ = {
     "octoprint.comm.protocol.gcode.queuing": __plugin_implementation__.gcode_queuing_handler,
