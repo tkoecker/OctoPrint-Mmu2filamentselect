@@ -28,6 +28,7 @@ $(function() {
         self.loginState = parameters[1];
         self.filamentManager = parameters[2];
         self.spoolManager = parameters[3];
+        self.access = parameters[4];
 
         self._modal = undefined;
 
@@ -103,7 +104,7 @@ $(function() {
         }
 
         self.onDataUpdaterPluginMessage = function(plugin, data) {
-            if (!self.loginState.isUser()) return;
+            if (!self.loginState.isUser() || !self.loginState.hasPermission(self.access.permissions.PLUGIN_MMU2FILAMENTSELECT_SELECT)) return;
             if (plugin !== "mmu2filamentselect") {
                 return;
             }
@@ -124,7 +125,7 @@ $(function() {
 
     OCTOPRINT_VIEWMODELS.push({
         construct: MMU2SelectViewModel,
-        dependencies: ["settingsViewModel","loginStateViewModel","filamentManagerViewModel","spoolManagerViewModel"],
+        dependencies: ["settingsViewModel","loginStateViewModel","filamentManagerViewModel","spoolManagerViewModel", "accessViewModel"],
         optional: ["filamentManagerViewModel","spoolManagerViewModel"],
         elements: ["#settings_plugin_mmu2filamentselect"]
     });
